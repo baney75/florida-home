@@ -1,6 +1,7 @@
 import CodeCard from "./components/CodeCard";
 import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 import { useState } from "react";
+import { haptic } from "./utils/haptic";
 
 const codes = [
   {
@@ -33,8 +34,14 @@ function App() {
   const currentDate = formatDate(new Date());
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+  const openFullscreen = () => {
+    haptic("medium");
+    setIsFullscreen(true);
+  };
+
+  const closeFullscreen = () => {
+    haptic("light");
+    setIsFullscreen(false);
   };
 
   return (
@@ -106,7 +113,7 @@ function App() {
           <button
             type="button"
             className="w-full flex justify-center p-4 bg-gray-50 rounded-xl border-2 border-gray-200 cursor-pointer active:scale-95 transition-transform"
-            onClick={toggleFullscreen}
+            onClick={openFullscreen}
             aria-label="Tap to enlarge QR code"
           >
             <img
@@ -144,7 +151,7 @@ function App() {
         <button
           type="button"
           className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center p-4 cursor-default"
-          onClick={toggleFullscreen}
+          onClick={closeFullscreen}
           aria-label="Tap to close fullscreen"
         >
           <div className="absolute top-4 left-0 right-0 text-center pointer-events-none">
