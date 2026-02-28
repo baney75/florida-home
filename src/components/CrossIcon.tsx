@@ -11,10 +11,11 @@ export function CrossIcon({ className = "w-4 h-4" }: CrossIconProps) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
+      {/* Christian cross with longer vertical bar */}
       <path
-        d="M12 2V22M2 12H22"
+        d="M12 3V21M6 8H18"
         stroke="currentColor"
-        strokeWidth="3"
+        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
