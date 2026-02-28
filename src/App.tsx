@@ -8,25 +8,21 @@ const codes = [
   {
     label: "Disarm Alarm",
     value: "95321",
-    note: "Keypad inside front door",
   },
   {
     label: "Arm Away Alarm",
     value: "95322",
-    note: "Keypad inside front door",
   },
   {
-    label: "Gate Access PIN",
+    label: "Gate PIN",
     value: "085764",
-    note: "",
   },
 ];
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
+    weekday: "short",
+    month: "short",
     day: "numeric",
   });
 }
@@ -46,17 +42,17 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <main className="mx-auto max-w-[420px] px-4 py-6">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex flex-col">
+      <main className="mx-auto max-w-[420px] w-full px-3 py-3 flex flex-col flex-1">
         {/* PWA Install Prompt - Only shows in browser */}
-        <div id="install-prompt">
+        <div id="install-prompt" className="flex-shrink-0">
           <PWAInstallPrompt />
         </div>
 
-        {/* Header with Logo */}
-        <header className="mb-6 text-center">
-          <div className="flex justify-center mb-4">
-            <div className="w-20 h-20 rounded-2xl shadow-md overflow-hidden bg-white">
+        {/* Compact Header */}
+        <header className="text-center flex-shrink-0 mb-2">
+          <div className="flex justify-center mb-1">
+            <div className="w-12 h-12 rounded-xl shadow-sm overflow-hidden bg-white">
               <img
                 src="/florida-home/logo.png"
                 alt="Florida Home"
@@ -68,30 +64,29 @@ function App() {
               />
             </div>
           </div>
-          <h1 className="text-xl font-bold text-[#800000]">
-            Florida Home Access
+          <h1 className="text-lg font-bold text-[#800000] leading-tight">
+            Florida Home
           </h1>
-          <p className="mt-1 text-xs text-gray-400">{currentDate}</p>
+          <p className="text-[10px] text-gray-400 leading-tight">{currentDate}</p>
         </header>
 
-        {/* Code Cards */}
-        <div className="space-y-3">
+        {/* Code Cards - Compact */}
+        <div className="space-y-2 flex-shrink-0">
           {codes.map((code) => (
             <CodeCard
               key={code.label}
               label={code.label}
               value={code.value}
-              note={code.note}
             />
           ))}
         </div>
 
-        {/* Gate QR Code Section */}
-        <section className="mt-6 rounded-2xl bg-white shadow-lg border-2 border-[#b8960c] p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-[#b8960c] flex items-center justify-center flex-shrink-0">
+        {/* Gate QR Code Section - Compact */}
+        <section className="mt-2 rounded-xl bg-white shadow border-2 border-[#b8960c] p-3 flex-shrink-0">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-6 h-6 rounded-full bg-[#b8960c] flex items-center justify-center flex-shrink-0">
               <svg 
-                className="w-5 h-5 text-white" 
+                className="w-3 h-3 text-white" 
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
@@ -106,45 +101,42 @@ function App() {
               </svg>
             </div>
             <div className="text-left">
-              <p className="text-base font-bold text-gray-900">Gate QR Code</p>
-              <p className="text-sm text-gray-500">Tap to enlarge for scanning</p>
+              <p className="text-sm font-bold text-gray-900 leading-tight">Gate QR Code</p>
+              <p className="text-[10px] text-gray-500 leading-tight">Tap to enlarge</p>
             </div>
           </div>
           
           <button
             type="button"
-            className="w-full flex justify-center p-4 bg-gray-50 rounded-xl border-2 border-gray-200 cursor-pointer active:scale-95 transition-transform"
+            className="w-full flex justify-center p-2 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer active:scale-95 transition-transform"
             onClick={openFullscreen}
             aria-label="Tap to enlarge QR code"
           >
             <img
               src="/florida-home/gate-qr-code.png"
               alt="Gate Access QR Code"
-              className="w-56 h-56 object-contain rounded-lg shadow-md bg-white p-3"
+              className="w-32 h-32 object-contain rounded bg-white"
               loading="eager"
               onError={(e) => {
                 const target = e.currentTarget;
                 target.style.display = 'none';
                 const errorMsg = document.createElement('div');
-                errorMsg.className = 'text-red-500 text-sm p-4';
-                errorMsg.textContent = 'QR code failed to load. Please refresh.';
+                errorMsg.className = 'text-red-500 text-xs p-2';
+                errorMsg.textContent = 'QR failed to load';
                 target.parentElement?.appendChild(errorMsg);
               }}
             />
           </button>
           
-          <div className="mt-4 flex items-center justify-center gap-2 text-gray-500">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p className="text-xs">Hold 2-3 inches from scanner</p>
-          </div>
+          <p className="mt-1 text-[10px] text-center text-gray-400 leading-tight">
+            Hold 2-3 inches from scanner
+          </p>
         </section>
 
-        {/* Footer */}
-        <footer className="mt-8 text-center pb-4">
-          <p className="text-xs text-gray-400 flex items-center justify-center gap-1">
-            <CrossIcon className="w-3 h-3" />
+        {/* Compact Footer */}
+        <footer className="mt-auto text-center pt-2 flex-shrink-0">
+          <p className="text-[10px] text-gray-400 flex items-center justify-center gap-0.5">
+            <CrossIcon className="w-2.5 h-2.5" />
             Family Access Only
           </p>
         </footer>
@@ -163,11 +155,11 @@ function App() {
             <p className="text-gray-400 text-sm">Tap anywhere to close</p>
           </div>
           
-          <div className="bg-white p-8 rounded-2xl shadow-2xl">
+          <div className="bg-white p-6 rounded-2xl shadow-2xl">
             <img
               src="/florida-home/gate-qr-code.png"
               alt="Gate Access QR Code - Fullscreen"
-              className="w-80 h-80 object-contain"
+              className="w-72 h-72 object-contain"
             />
           </div>
           
