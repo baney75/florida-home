@@ -1,7 +1,7 @@
 import CodeCard from "./components/CodeCard";
 import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 import { CrossIcon } from "./components/CrossIcon";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { haptic } from "./utils/haptic";
 
 const codes = [
@@ -19,17 +19,30 @@ const codes = [
   },
 ];
 
-function formatDate(date: Date): string {
-  return date.toLocaleDateString("en-US", {
+function App() {
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    // Update time every minute
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formattedDate = currentTime.toLocaleDateString("en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
   });
-}
 
-function App() {
-  const currentDate = formatDate(new Date());
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const formattedTime = currentTime.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
 
   const openFullscreen = () => {
     haptic("medium");
@@ -49,7 +62,7 @@ function App() {
           <PWAInstallPrompt />
         </div>
 
-        {/* Compact Header */}
+        {/* Compact Header with Date and Time */}
         <header className="text-center flex-shrink-0 mb-2">
           <div className="flex justify-center mb-1">
             <div className="w-12 h-12 rounded-xl shadow-sm overflow-hidden bg-white">
@@ -67,7 +80,11 @@ function App() {
           <h1 className="text-lg font-bold text-[#800000] leading-tight">
             Florida Home
           </h1>
-          <p className="text-[10px] text-gray-400 leading-tight">{currentDate}</p>
+          <div className="flex items-center justify-center gap-2 mt-0.5">
+            <p className="text-[10px] text-gray-500 leading-tight">{formattedDate}</p>
+            <span className="text-[10px] text-gray-300">|</span>
+            <p className="text-[10px] text-gray-500 leading-tight font-medium">{formattedTime}</p>
+          </div>
         </header>
 
         {/* Code Cards - Compact */}
