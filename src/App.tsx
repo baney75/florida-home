@@ -1,5 +1,6 @@
 import CodeCard from "./components/CodeCard";
 import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
+import { CrossIcon } from "./components/CrossIcon";
 import { useState } from "react";
 import { haptic } from "./utils/haptic";
 
@@ -142,7 +143,10 @@ function App() {
 
         {/* Footer */}
         <footer className="mt-8 text-center pb-4">
-          <p className="text-xs text-gray-400">✝ Family Access Only</p>
+          <p className="text-xs text-gray-400 flex items-center justify-center gap-1">
+            <CrossIcon className="w-3 h-3" />
+            Family Access Only
+          </p>
         </footer>
       </main>
 
