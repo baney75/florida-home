@@ -1,73 +1,120 @@
-# React + TypeScript + Vite
+# 🏠 Florida Home Access
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A clean, minimal Progressive Web App (PWA) for displaying vacation home access codes. Built with Vite, React, TypeScript, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## 🌐 Live Site
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**https://baneymelo.github.io/florida-home/**
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **No PIN Gate**: Security is delegated entirely to device lock (Face ID / Touch ID / passcode)
+- **Progressive Web App**: Installable on iOS Safari via "Add to Home Screen"
+- **Clean, Minimal Design**: Maroon minimalist aesthetic with clear typography
+- **Mobile-First**: Optimized for quick access on smartphones
+- **Offline Capable**: Works without internet once installed
 
-## Expanding the ESLint configuration
+## 🎨 Design System
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Primary**: Maroon `#800000`
+- **Surface**: White `#FFFFFF`
+- **Text**: Charcoal `#1a1a1a`
+- **Accent**: Warm gold `#b8960c`
+- **Font**: Inter (Google Fonts)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Development
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# Install dependencies
+bun install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Start development server
+bun run dev
+
+# Build for production
+bun run build
+
+# Preview production build
+bun run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📦 Deployment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+The app is automatically deployed to GitHub Pages via:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+bun run deploy
 ```
+
+## 🔐 Access Codes
+
+The following codes are displayed in the app:
+
+| Label | Code | Note |
+|-------|------|------|
+| Disarm Alarm | 95321 | Keypad inside front door |
+| Arm Away Alarm | 95322 | Keypad inside front door |
+| Gate Access PIN | 085764 | |
+
+## 📱 Installing on iOS
+
+1. Open **Safari** and navigate to the live site
+2. Tap the **Share** button (square with arrow)
+3. Scroll down and tap **"Add to Home Screen"**
+4. The app icon will appear on your home screen
+5. Open with Face ID / Touch ID / passcode
+
+## 🛠 Tech Stack
+
+- **Runtime**: Bun
+- **Framework**: Vite + React 19
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS v4
+- **PWA**: vite-plugin-pwa (Workbox)
+- **Deploy**: gh-pages
+- **Icons**: Programmatically generated with canvas
+
+## 📝 Project Structure
+
+```
+florida-home/
+├── public/
+│   ├── icons/           # PWA icons (192x192, 512x512)
+│   └── manifest.webmanifest
+├── src/
+│   ├── components/
+│   │   └── CodeCard.tsx
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── scripts/
+│   └── generate-icons.ts
+├── vite.config.ts
+└── package.json
+```
+
+## 🔄 Updating Codes
+
+To update access codes:
+
+1. Edit `src/App.tsx`
+2. Modify the `codes` array
+3. Run `bun run deploy`
+
+## 🛡 Security Note
+
+This app intentionally has **no built-in authentication**. Security is provided by:
+
+- **Device lock** (Face ID / Touch ID / passcode)
+- **Physical device possession**
+- **GitHub Pages HTTPS**
+
+The app is designed for family use where device security is already established.
+
+## 📄 License
+
+Private - Family use only
+
+---
+
+Built with care ✝
