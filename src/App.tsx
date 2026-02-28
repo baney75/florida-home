@@ -1,4 +1,5 @@
 import CodeCard from "./components/CodeCard";
+import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 import { useState } from "react";
 
 const codes = [
@@ -39,6 +40,11 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <main className="mx-auto max-w-[420px] px-4 py-6">
+        {/* PWA Install Prompt - Only shows in browser */}
+        <div id="install-prompt">
+          <PWAInstallPrompt />
+        </div>
+
         {/* Header with Logo */}
         <header className="mb-6 text-center">
           <div className="flex justify-center mb-4">
@@ -97,17 +103,11 @@ function App() {
             </div>
           </div>
           
-          <div 
-            className="flex justify-center p-4 bg-gray-50 rounded-xl border-2 border-gray-200 cursor-pointer active:scale-95 transition-transform"
+          <button
+            type="button"
+            className="w-full flex justify-center p-4 bg-gray-50 rounded-xl border-2 border-gray-200 cursor-pointer active:scale-95 transition-transform"
             onClick={toggleFullscreen}
-            role="button"
-            tabIndex={0}
             aria-label="Tap to enlarge QR code"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                toggleFullscreen();
-              }
-            }}
           >
             <img
               src="/florida-home/gate-qr-code.png"
@@ -123,7 +123,7 @@ function App() {
                 target.parentElement?.appendChild(errorMsg);
               }}
             />
-          </div>
+          </button>
           
           <div className="mt-4 flex items-center justify-center gap-2 text-gray-500">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -141,19 +141,13 @@ function App() {
 
       {/* Fullscreen QR Code Overlay */}
       {isFullscreen && (
-        <div 
-          className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center p-4"
+        <button
+          type="button"
+          className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center p-4 cursor-default"
           onClick={toggleFullscreen}
-          role="button"
-          tabIndex={0}
           aria-label="Tap to close fullscreen"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              toggleFullscreen();
-            }
-          }}
         >
-          <div className="absolute top-4 left-0 right-0 text-center">
+          <div className="absolute top-4 left-0 right-0 text-center pointer-events-none">
             <p className="text-white text-lg font-semibold">Gate QR Code</p>
             <p className="text-gray-400 text-sm">Tap anywhere to close</p>
           </div>
@@ -166,10 +160,10 @@ function App() {
             />
           </div>
           
-          <div className="absolute bottom-8 left-0 right-0 text-center">
+          <div className="absolute bottom-8 left-0 right-0 text-center pointer-events-none">
             <p className="text-gray-400 text-sm">Hold 2-3 inches from scanner</p>
           </div>
-        </div>
+        </button>
       )}
     </div>
   );
