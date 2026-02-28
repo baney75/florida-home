@@ -53,6 +53,26 @@ function App() {
           ))}
         </div>
 
+        {/* Gate QR Code Section */}
+        <section className="mt-8 rounded-xl bg-white shadow-md border-l-4 border-[#b8960c] p-5">
+          <p className="text-xs font-medium uppercase tracking-wide text-gray-500 mb-4">
+            Gate QR Code
+          </p>
+          <p className="text-sm text-gray-600 mb-4">
+            Scan at the main gate for quick entry
+          </p>
+          <div className="flex justify-center">
+            <img
+              src="/florida-home/gate-qr-code.png"
+              alt="Gate Access QR Code"
+              className="w-48 h-48 object-contain rounded-lg border-2 border-gray-100"
+            />
+          </div>
+          <p className="mt-3 text-xs text-center italic text-gray-400">
+            Hold QR code 2-3 inches from scanner
+          </p>
+        </section>
+
         {/* Footer */}
         <footer className="mt-12 text-center">
           <p className="text-xs text-gray-400">✝ Family Access Only</p>
