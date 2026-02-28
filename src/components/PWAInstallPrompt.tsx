@@ -1,31 +1,51 @@
 import { usePWA } from "../hooks/usePWA";
 import { haptic } from "../utils/haptic";
+import { useEffect, useState } from "react";
 
 export function PWAInstallPrompt() {
   const { isStandalone, canInstall, isUpdateAvailable, installPWA, updatePWA } = usePWA();
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    const hiddenUntil = Number(localStorage.getItem("fh_install_prompt_hidden_until") || "0");
+    setHidden(hiddenUntil > Date.now());
+  }, []);
+
+  const dismissPrompt = () => {
+    haptic("light");
+    localStorage.setItem(
+      "fh_install_prompt_hidden_until",
+      String(Date.now() + 1000 * 60 * 60 * 12),
+    );
+    setHidden(true);
+  };
+
+  if (hidden) {
+    return null;
+  }
 
   // Don't show anything if already in PWA mode
   if (isStandalone) {
     // Show update button if update is available
     if (isUpdateAvailable) {
       return (
-        <div className="fixed top-4 left-4 right-4 bg-[#800000] text-white px-4 py-3 rounded-xl shadow-lg z-40 flex items-center justify-between">
+        <div className="mb-2 rounded-lg border border-[#800000]/25 bg-[#800000] px-3 py-2 text-white shadow-sm">
           <div className="flex items-center gap-2">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
-            <span className="text-sm font-medium">Update available</span>
+            <span className="text-xs font-medium">PWA update available</span>
+            <button
+              type="button"
+              onClick={() => {
+                haptic("success");
+                updatePWA();
+              }}
+              className="ml-auto rounded-md bg-white px-2.5 py-1 text-xs font-semibold text-[#800000] active:scale-95 transition-transform"
+            >
+              Update
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              haptic("success");
-              updatePWA();
-            }}
-            className="bg-white text-[#800000] px-4 py-1.5 rounded-lg text-sm font-semibold active:scale-95 transition-transform"
-          >
-            Update
-          </button>
         </div>
       );
     }
@@ -35,41 +55,35 @@ export function PWAInstallPrompt() {
   // Show install prompt if can install
   if (canInstall) {
     return (
-      <div className="bg-[#800000] text-white rounded-xl p-4 mb-4 shadow-md">
-        <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <div className="mb-2 rounded-lg border border-[#800000]/20 bg-white px-3 py-2 shadow-sm">
+        <div className="flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#800000]/10 text-[#800000]">
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
             </svg>
           </div>
-          <div className="flex-1">
-            <p className="font-semibold text-base">Install Florida Home Access</p>
-            <p className="text-sm text-white/80 mt-1">
-              Add to your home screen for quick offline access to your codes.
-            </p>
-            <div className="flex gap-2 mt-3">
-              <button
-                type="button"
-                onClick={() => {
-                  haptic("success");
-                  installPWA();
-                }}
-                className="bg-white text-[#800000] px-4 py-2 rounded-lg text-sm font-semibold active:scale-95 transition-transform flex-1"
-              >
-                Install
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  haptic("light");
-                  // Dismiss for this session
-                  document.getElementById('install-prompt')?.style.setProperty('display', 'none');
-                }}
-                className="bg-transparent border border-white/50 text-white px-4 py-2 rounded-lg text-sm active:scale-95 transition-transform"
-              >
-                Later
-              </button>
-            </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs font-semibold text-[#800000]">Install app for offline access</p>
+          </div>
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => {
+                haptic("success");
+                installPWA();
+              }}
+              className="rounded-md bg-[#800000] px-2.5 py-1 text-xs font-semibold text-white active:scale-95 transition-transform"
+            >
+              Install
+            </button>
+            <button
+              type="button"
+              onClick={dismissPrompt}
+              className="rounded-md border border-gray-300 px-2 py-1 text-xs text-gray-600 active:scale-95 transition-transform"
+              aria-label="Dismiss install prompt"
+            >
+              Later
+            </button>
           </div>
         </div>
       </div>
@@ -81,25 +95,24 @@ export function PWAInstallPrompt() {
   
   if (isIOS) {
     return (
-      <div className="bg-gradient-to-r from-[#800000] to-[#600000] text-white rounded-xl p-4 mb-4 shadow-md">
-        <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <div className="mb-2 rounded-lg border border-[#800000]/20 bg-white px-3 py-2 shadow-sm">
+        <div className="flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#800000]/10 text-[#800000]">
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
             </svg>
           </div>
-          <div className="flex-1">
-            <p className="font-semibold text-base">Install for Offline Access</p>
-            <p className="text-sm text-white/80 mt-1">
-              Tap <strong>Share</strong> then <strong>"Add to Home Screen"</strong> to install.
-            </p>
-            <div className="mt-2 flex items-center gap-1">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="text-xs text-white/70">Works offline</span>
-            </div>
-          </div>
+          <p className="min-w-0 flex-1 text-xs text-gray-700">
+            Tap <span className="font-semibold">Share</span> then <span className="font-semibold">Add to Home Screen</span>
+          </p>
+          <button
+            type="button"
+            onClick={dismissPrompt}
+            className="rounded-md border border-gray-300 px-2 py-1 text-xs text-gray-600 active:scale-95 transition-transform"
+          >
+            Later
+          </button>
+          <div className="text-[10px] font-medium text-[#800000]">Offline</div>
         </div>
       </div>
     );
