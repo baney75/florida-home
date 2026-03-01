@@ -3,6 +3,8 @@ import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 import { useState, useEffect } from "react";
 import { haptic } from "./utils/haptic";
 
+declare const __BUILD_TIME__: string;
+
 const codes = [
   {
     label: "Disarm Alarm",
@@ -189,6 +191,29 @@ function App() {
         {/* Footer */}
         <footer className="mt-auto text-center pt-4 pb-2 flex-shrink-0">
           <p className="text-xs text-gray-400">✝︎ Family Access Only</p>
+          <button
+            type="button"
+            onClick={async () => {
+              if (confirm('Clear cache and reload to get the latest version?')) {
+                // Clear all caches
+                if ('caches' in window) {
+                  const cacheNames = await caches.keys();
+                  await Promise.all(cacheNames.map(name => caches.delete(name)));
+                }
+                // Unregister service worker
+                if ('serviceWorker' in navigator) {
+                  const registrations = await navigator.serviceWorker.getRegistrations();
+                  await Promise.all(registrations.map(reg => reg.unregister()));
+                }
+                // Hard reload
+                window.location.reload();
+              }
+            }}
+            className="mt-2 text-[10px] text-gray-300 hover:text-gray-500 transition-colors"
+            aria-label="Clear cache and reload"
+          >
+            v{__BUILD_TIME__?.slice(0, 10) || '1.0'} • Tap to refresh
+          </button>
         </footer>
       </main>
 

@@ -3,8 +3,14 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
+// Build timestamp for cache busting
+const BUILD_TIMESTAMP = new Date().toISOString();
+
 export default defineConfig({
   base: "/florida-home/",
+  define: {
+    __BUILD_TIME__: JSON.stringify(BUILD_TIMESTAMP),
+  },
   plugins: [
     react(),
     tailwindcss(),
@@ -15,13 +21,14 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/baney75\.github\.io\/florida-home\/.*/i,
-            handler: "CacheFirst",
+            handler: "NetworkFirst",
             options: {
-              cacheName: "florida-home-cache",
+              cacheName: "florida-home-cache-v2",
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+                maxAgeSeconds: 60 * 60 * 24, // 1 day only
               },
+              networkTimeoutSeconds: 3,
               cacheableResponse: {
                 statuses: [0, 200],
               },
