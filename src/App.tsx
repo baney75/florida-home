@@ -18,15 +18,17 @@ const codes = [
   },
 ];
 
+const doorCode = "924-392";
+
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
-    // Update time every minute
+    // Update time every second for real-time display
     const timer = setInterval(() => {
       setCurrentTime(new Date());
-    }, 60000);
+    }, 1000);
 
     return () => clearInterval(timer);
   }, []);
@@ -96,6 +98,41 @@ function App() {
             />
           ))}
         </div>
+
+        {/* Front Door Code Section - NEW */}
+        <section className="mt-2 rounded-xl bg-white shadow border-2 border-[#dc2626] p-3 flex-shrink-0">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-6 h-6 rounded-full bg-[#dc2626] flex items-center justify-center flex-shrink-0">
+              <svg
+                className="w-3 h-3 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5"
+                />
+              </svg>
+            </div>
+            <div className="text-left">
+              <p className="text-sm font-bold text-gray-900 leading-tight">Front Door Code</p>
+              <p className="text-[10px] text-gray-500 leading-tight">Digital Lock Access</p>
+            </div>
+          </div>
+
+          <div className="w-full bg-gray-50 rounded-lg border border-gray-200 p-4 text-center">
+            <p className="text-3xl font-bold text-[#dc2626] font-mono tracking-wider leading-tight">
+              {doorCode}
+            </p>
+            <p className="mt-2 text-[10px] text-gray-500 leading-tight">
+              Enter on the door lock keypad to unlock
+            </p>
+          </div>
+        </section>
 
         {/* Gate QR Code Section - Compact */}
         <section className="mt-2 rounded-xl bg-white shadow border-2 border-[#b8960c] p-3 flex-shrink-0">
