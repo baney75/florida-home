@@ -8,12 +8,33 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0"
     />
-    <title>Florida Home Access</title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <script type="module" crossorigin src="/florida-home/assets/index-BZd4kqWf.js?v=2"></script>
-    <link rel="stylesheet" crossorigin href="/florida-home/assets/index-B1cDjXUa.css?v=2">
+    <title>Florida Home Access</title>
+    <script>
+      // Emergency cache clear - force reload if old version detected
+      (function() {
+        // Clear caches on load
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            names.forEach(function(name) {
+              caches.delete(name);
+            });
+          });
+        }
+        // Unregister service workers
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            registrations.forEach(function(registration) {
+              registration.unregister();
+            });
+          });
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/florida-home/assets/index-BZd4kqWf.js?v=3"></script>
+    <link rel="stylesheet" crossorigin href="/florida-home/assets/index-B1cDjXUa.css?v=3">
   <link rel="manifest" href="/florida-home/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/florida-home/registerSW.js"></script></head>
   <body>
     <div id="root"></div>
