@@ -59,14 +59,14 @@ function App() {
 
   return (
     <div className="min-h-[100dvh] bg-gradient-to-b from-gray-50 to-white flex flex-col">
-      <main className="mx-auto max-w-full sm:max-w-[448px] w-full px-3 sm:px-4 py-3 sm:py-4 flex flex-col flex-1 pb-[env(safe-area-inset-bottom)]">
+      <main className="mx-auto max-w-full sm:max-w-[448px] lg:max-w-[560px] w-full px-3 sm:px-4 lg:px-5 py-3 sm:py-4 lg:py-6 flex flex-col flex-1 pb-[env(safe-area-inset-bottom)]">
         {/* PWA Install Prompt - Only shows in browser */}
         <div id="install-prompt" className="flex-shrink-0">
           <PWAInstallPrompt />
         </div>
 
         {/* Compact Header with Date and Time */}
-        <header className="text-center flex-shrink-0 mb-2">
+        <header className="text-center flex-shrink-0 mb-3 lg:mb-4">
           <div className="flex justify-center mb-1">
             <div className="w-12 h-12 rounded-xl shadow-sm overflow-hidden bg-white">
               <img
@@ -91,7 +91,7 @@ function App() {
         </header>
 
         {/* Code Cards - Compact */}
-        <div className="space-y-2 flex-shrink-0">
+        <div className="space-y-2 lg:space-y-3 flex-shrink-0">
           {codes.map((code) => (
             <CodeCard
               key={code.label}
@@ -102,7 +102,7 @@ function App() {
         </div>
 
         {/* Front Door Code Section - NEW */}
-        <section className="mt-2 rounded-xl bg-white shadow border-2 border-[#dc2626] p-3 flex-shrink-0">
+        <section className="mt-2 lg:mt-3 rounded-xl bg-white shadow border-2 border-[#dc2626] p-3 lg:p-4 flex-shrink-0">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-8 rounded-full bg-[#dc2626] flex items-center justify-center flex-shrink-0">
               <svg
@@ -126,8 +126,8 @@ function App() {
             </div>
           </div>
 
-          <div className="w-full bg-gray-50 rounded-lg border border-gray-200 p-4 text-center">
-            <p className="text-3xl font-bold text-[#dc2626] font-mono tracking-wider leading-tight">
+          <div className="w-full bg-gray-50 rounded-lg border border-gray-200 p-4 lg:p-5 text-center">
+            <p className="text-3xl lg:text-4xl font-bold text-[#dc2626] font-mono tracking-wider leading-tight">
               {doorCode}
             </p>
             <p className="mt-2 text-xs text-gray-500 leading-tight">
@@ -137,7 +137,7 @@ function App() {
         </section>
 
         {/* Gate QR Code Section - Compact */}
-        <section className="mt-2 rounded-xl bg-white shadow border-2 border-[#b8960c] p-3 flex-shrink-0">
+        <section className="mt-2 lg:mt-3 rounded-xl bg-white shadow border-2 border-[#b8960c] p-3 lg:p-4 flex-shrink-0">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-8 rounded-full bg-[#b8960c] flex items-center justify-center flex-shrink-0">
               <svg 
@@ -163,14 +163,14 @@ function App() {
           
           <button
             type="button"
-            className="w-full min-h-[44px] flex justify-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer motion-safe:active:scale-95 transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#800000] focus-visible:outline-offset-2"
+            className="w-full min-h-[44px] flex justify-center p-3 lg:p-4 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer motion-safe:active:scale-95 transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#800000] focus-visible:outline-offset-2"
             onClick={openFullscreen}
             aria-label="Tap to enlarge QR code"
           >
             <img
               src="/florida-home/gate-qr-code.png"
               alt="Gate Access QR Code"
-              className="w-36 h-36 sm:w-40 sm:h-40 object-contain rounded bg-white"
+              className="w-36 h-36 sm:w-40 sm:h-40 lg:w-48 lg:h-48 object-contain rounded bg-white"
               loading="eager"
               onError={(e) => {
                 const target = e.currentTarget;
@@ -183,13 +183,13 @@ function App() {
             />
           </button>
           
-          <p className="mt-2 text-xs text-center text-gray-400 leading-tight">
+          <p className="mt-2 text-xs lg:text-sm text-center text-gray-400 leading-tight">
             Hold 2-3 inches from scanner
           </p>
         </section>
 
         {/* Footer */}
-        <footer className="mt-auto text-center pt-4 pb-2 flex-shrink-0">
+        <footer className="mt-auto text-center pt-4 lg:pt-6 pb-2 flex-shrink-0">
           <p className="text-xs text-gray-400">✝︎ Family Access Only</p>
           <button
             type="button"
@@ -209,7 +209,7 @@ function App() {
                 window.location.reload();
               }
             }}
-            className="mt-2 text-[10px] text-gray-300 hover:text-gray-500 transition-colors"
+            className="mt-2 text-[10px] lg:text-xs text-gray-300 hover:text-gray-500 transition-colors"
             aria-label="Clear cache and reload"
           >
             v{__BUILD_TIME__?.slice(0, 10) || '1.0'} • Tap to refresh
@@ -234,7 +234,7 @@ function App() {
             <img
               src="/florida-home/gate-qr-code.png"
               alt="Gate Access QR Code - Fullscreen"
-              className="w-72 h-72 object-contain"
+              className="w-72 h-72 sm:w-80 sm:h-80 object-contain"
             />
           </div>
           
