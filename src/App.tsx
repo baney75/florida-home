@@ -56,8 +56,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex flex-col">
-      <main className="mx-auto max-w-[420px] w-full px-3 py-3 flex flex-col flex-1">
+    <div className="min-h-[100dvh] bg-gradient-to-b from-gray-50 to-white flex flex-col">
+      <main className="mx-auto max-w-full sm:max-w-[448px] w-full px-3 sm:px-4 py-3 sm:py-4 flex flex-col flex-1 pb-[env(safe-area-inset-bottom)]">
         {/* PWA Install Prompt - Only shows in browser */}
         <div id="install-prompt" className="flex-shrink-0">
           <PWAInstallPrompt />
@@ -82,9 +82,9 @@ function App() {
             Florida Home
           </h1>
           <div className="flex items-center justify-center gap-2 mt-0.5">
-            <p className="text-[10px] text-gray-500 leading-tight">{formattedDate}</p>
-            <span className="text-[10px] text-gray-300">|</span>
-            <p className="text-[10px] text-gray-500 leading-tight font-medium">{formattedTime}</p>
+            <p className="text-xs text-gray-500 leading-tight">{formattedDate}</p>
+            <span className="text-xs text-gray-300">|</span>
+            <p className="text-xs text-gray-500 leading-tight font-medium">{formattedTime}</p>
           </div>
         </header>
 
@@ -101,10 +101,10 @@ function App() {
 
         {/* Front Door Code Section - NEW */}
         <section className="mt-2 rounded-xl bg-white shadow border-2 border-[#dc2626] p-3 flex-shrink-0">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 rounded-full bg-[#dc2626] flex items-center justify-center flex-shrink-0">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 rounded-full bg-[#dc2626] flex items-center justify-center flex-shrink-0">
               <svg
-                className="w-3 h-3 text-white"
+                className="w-4 h-4 text-white"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -119,8 +119,8 @@ function App() {
               </svg>
             </div>
             <div className="text-left">
-              <p className="text-sm font-bold text-gray-900 leading-tight">Front Door Code</p>
-              <p className="text-[10px] text-gray-500 leading-tight">Digital Lock Access</p>
+              <p className="text-base font-bold text-gray-900 leading-tight">Front Door Code</p>
+              <p className="text-xs text-gray-500 leading-tight">Digital Lock Access</p>
             </div>
           </div>
 
@@ -128,7 +128,7 @@ function App() {
             <p className="text-3xl font-bold text-[#dc2626] font-mono tracking-wider leading-tight">
               {doorCode}
             </p>
-            <p className="mt-2 text-[10px] text-gray-500 leading-tight">
+            <p className="mt-2 text-xs text-gray-500 leading-tight">
               Enter on the door lock keypad to unlock
             </p>
           </div>
@@ -136,10 +136,10 @@ function App() {
 
         {/* Gate QR Code Section - Compact */}
         <section className="mt-2 rounded-xl bg-white shadow border-2 border-[#b8960c] p-3 flex-shrink-0">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 rounded-full bg-[#b8960c] flex items-center justify-center flex-shrink-0">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 rounded-full bg-[#b8960c] flex items-center justify-center flex-shrink-0">
               <svg 
-                className="w-3 h-3 text-white" 
+                className="w-4 h-4 text-white" 
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
@@ -154,41 +154,41 @@ function App() {
               </svg>
             </div>
             <div className="text-left">
-              <p className="text-sm font-bold text-gray-900 leading-tight">Gate QR Code</p>
-              <p className="text-[10px] text-gray-500 leading-tight">Tap to enlarge</p>
+              <p className="text-base font-bold text-gray-900 leading-tight">Gate QR Code</p>
+              <p className="text-xs text-gray-500 leading-tight">Tap to enlarge</p>
             </div>
           </div>
           
           <button
             type="button"
-            className="w-full flex justify-center p-2 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer active:scale-95 transition-transform"
+            className="w-full min-h-[44px] flex justify-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer motion-safe:active:scale-95 transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#800000] focus-visible:outline-offset-2"
             onClick={openFullscreen}
             aria-label="Tap to enlarge QR code"
           >
             <img
               src="/florida-home/gate-qr-code.png"
               alt="Gate Access QR Code"
-              className="w-32 h-32 object-contain rounded bg-white"
+              className="w-36 h-36 sm:w-40 sm:h-40 object-contain rounded bg-white"
               loading="eager"
               onError={(e) => {
                 const target = e.currentTarget;
                 target.style.display = 'none';
                 const errorMsg = document.createElement('div');
-                errorMsg.className = 'text-red-500 text-xs p-2';
+                errorMsg.className = 'text-red-500 text-sm p-2';
                 errorMsg.textContent = 'QR failed to load';
                 target.parentElement?.appendChild(errorMsg);
               }}
             />
           </button>
           
-          <p className="mt-1 text-[10px] text-center text-gray-400 leading-tight">
+          <p className="mt-2 text-xs text-center text-gray-400 leading-tight">
             Hold 2-3 inches from scanner
           </p>
         </section>
 
-        {/* Compact Footer */}
-        <footer className="mt-auto text-center pt-2 flex-shrink-0">
-          <p className="text-[10px] text-gray-400">✝︎ Family Access Only</p>
+        {/* Footer */}
+        <footer className="mt-auto text-center pt-4 pb-2 flex-shrink-0">
+          <p className="text-xs text-gray-400">✝︎ Family Access Only</p>
         </footer>
       </main>
 

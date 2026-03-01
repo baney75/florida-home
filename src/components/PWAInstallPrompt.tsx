@@ -7,7 +7,7 @@ export function PWAInstallPrompt() {
   const [hidden, setHidden] = useState(false);
 
   const toastContainerClass =
-    "fixed left-1/2 top-[max(env(safe-area-inset-top),0.75rem)] z-40 w-[calc(100%-1rem)] max-w-[420px] -translate-x-1/2 pointer-events-none";
+    "fixed left-1/2 top-[max(env(safe-area-inset-top),0.75rem)] z-40 w-[calc(100%-2rem)] max-w-[448px] -translate-x-1/2 pointer-events-none";
 
   useEffect(() => {
     const hiddenUntil = Number(localStorage.getItem("fh_install_prompt_hidden_until") || "0");
@@ -45,7 +45,7 @@ export function PWAInstallPrompt() {
                   haptic("success");
                   updatePWA();
                 }}
-                className="ml-auto rounded-md bg-white px-2.5 py-1 text-xs font-semibold text-[#800000] active:scale-95 transition-transform"
+                className="ml-auto rounded-md bg-white px-3 py-2 text-xs font-semibold text-[#800000] min-h-[44px] min-w-[44px] motion-safe:active:scale-95 transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
               >
                 Update
               </button>
@@ -78,14 +78,14 @@ export function PWAInstallPrompt() {
                   haptic("success");
                   installPWA();
                 }}
-                className="rounded-md bg-[#800000] px-2.5 py-1 text-xs font-semibold text-white active:scale-95 transition-transform"
+                className="rounded-md bg-[#800000] px-3 py-2 text-xs font-semibold text-white min-h-[44px] min-w-[44px] motion-safe:active:scale-95 transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#800000] focus-visible:outline-offset-2"
               >
                 Install
               </button>
               <button
                 type="button"
                 onClick={dismissPrompt}
-                className="rounded-md border border-gray-300 px-2 py-1 text-xs text-gray-600 active:scale-95 transition-transform"
+                className="rounded-md border border-gray-300 px-3 py-2 text-xs text-gray-600 min-h-[44px] min-w-[44px] motion-safe:active:scale-95 transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray-400 focus-visible:outline-offset-2"
                 aria-label="Dismiss install prompt"
               >
                 Later
@@ -116,11 +116,11 @@ export function PWAInstallPrompt() {
             <button
               type="button"
               onClick={dismissPrompt}
-              className="rounded-md border border-gray-300 px-2 py-1 text-xs text-gray-600 active:scale-95 transition-transform"
+              className="rounded-md border border-gray-300 px-3 py-2 text-xs text-gray-600 min-h-[44px] min-w-[44px] motion-safe:active:scale-95 transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray-400 focus-visible:outline-offset-2"
             >
               Later
             </button>
-            <div className="text-[10px] font-medium text-[#800000]">Offline</div>
+            <div className="text-xs font-medium text-[#800000]">Offline</div>
           </div>
         </div>
       </div>
